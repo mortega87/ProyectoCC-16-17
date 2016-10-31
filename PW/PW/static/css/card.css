@@ -1,0 +1,63 @@
+.card{
+float: left;
+width: 360px;
+border: 1px solid gray;
+box-shadow: 3px 3px 5px #000000;
+border-radius: .6em;
+background-color: #FFFFFF;
+height: 260px;
+clear:inherit;
+
+}
+
+.imagen_carta{
+	float:left;
+	height: 120px;
+  width: 120px;
+  margin-top: 7px;
+	margin-left: 95px;
+
+}
+
+.titulo_carta{
+float:left;
+font-weight: lighter;
+margin-left: 5px;
+margin-top: 10px;
+width:330px;
+height: 40px;
+clear:both;
+}
+
+.titulo_carta p{
+	float:left;
+	margin-left:20px;
+	margin-bottom: 20px;
+	font-size: 20px;
+	font-family: 'Lobster', cursive;
+}
+
+.texto_carta{
+	float:left;
+  margin-top: 5px;
+	margin-left: 5px;
+	width:330px;
+	height: 40px;
+}
+
+.texto_carta p{
+
+	float:left;
+	margin-left:20px;
+	margin-bottom: 30px;
+font-family: 'Lobster', cursive;
+
+}
+
+#mainbox{
+
+  font-family: calibri;
+  box-sizing: border-box;
+  justify-content: center;
+
+}

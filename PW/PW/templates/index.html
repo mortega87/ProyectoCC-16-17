@@ -1,0 +1,312 @@
+{%extends "base.html"%}
+{%block content%}
+
+{% load staticfiles %}
+
+<section id="novedades">
+
+  <section id="nov">
+
+  <section id="mainbox">
+    <section class="card">
+      <section class="carta">
+        <a  href="{% url 'disco' %}?titulo={{discos_index.0.Titulo}}"><section>
+            <img id="trigger" class="imagen_carta" style="margin-top:10px;" src ="{{discos_index.0.Imagen}}"/>
+        </section></a>
+      </section>
+      <section class="titulo_carta">
+           <p>{{discos_index.0.Artista}}</p>
+      </section>
+      <section class="texto_carta">
+          <p>{{discos_index.0.Titulo}}</p>
+      </section>
+    </section>
+
+    </section>
+
+  </section>
+
+  <section id="nov">
+
+  <section id="mainbox" style="margin-left:5px;">
+    <section class="card">
+      <section class="carta">
+        <a  href="{% url 'disco' %}?titulo={{discos_index.3.Titulo}}"><section>
+            <img id="trigger" class="imagen_carta" style="margin-top:10px;" src ="{{discos_index.3.Imagen}}"/>
+        </section></a>
+      </section>
+      <section class="titulo_carta">
+           <p>{{discos_index.3.Artista}}</p>
+      </section>
+      <section class="texto_carta">
+          <p>{{discos_index.3.Titulo}}</p>
+      </section>
+    </section>
+
+    </section>
+
+  </section>
+
+  <section id="nov">
+
+  <section id="mainbox" style="margin-left:3px;">
+    <section class="card">
+      <section class="carta">
+        <a  href="{% url 'disco' %}?titulo={{discos_index.5.Titulo}}"><section>
+            <img id="trigger" class="imagen_carta" style="margin-top:10px;" src ="{{discos_index.5.Imagen}}"/>
+        </section></a>
+      </section>
+      <section class="titulo_carta">
+           <p>{{discos_index.5.Artista}}</p>
+      </section>
+      <section class="texto_carta">
+          <p>{{discos_index.5.Titulo}}</p>
+      </section>
+    </section>
+
+    </section>
+
+  </section>
+
+</section>
+
+
+<nav>
+  <ul>
+    <li><a href="">Home</a></li>
+    <li><a href="{% url 'rock' %}?genero=rock">Rock</a></li>
+    <li><a href="{% url 'rock' %}?genero=punk">Punk</a></li>
+    <li><a href="{% url 'rock' %}?genero=metal">Metal</a></li>
+    <li><a href="{% url 'rock' %}?genero=electronica">Electronica</a></li>
+  </ul>
+</nav>
+
+<section id="novporgenero"  style= "overflow: scroll;">
+  {% for x in discos_index %}
+  <section id="mainboxnov">
+    <section class="cardnov" style = "width:100%;height: 19%;">
+      <section>
+        <a  href="{% url 'disco' %}?titulo={{x.Titulo}}"><section>
+            <img id="trigger" class="imagen_cartanov" style="margin-top:10px;" src ="{{x.Imagen}}"/>
+        </section></a>
+      </section>
+      <section class="titulo_cartanov">
+           <p>{{x.Artista}}</p>
+      </section>
+      <section class="texto_cartanov">
+          <p>{{x.Titulo}}</p>
+      </section>
+    </section>
+
+  </section>
+  {% endfor %}
+
+
+
+</section>
+
+<section id = "noticias">
+
+  <section id ="tit">
+    <h1>Noticias Destacadas</h1>
+  </section>
+
+  <hr>
+
+  <p>Inauguramos nuestra web dedicada a la musica en todas sus vertientes, esperamos que os guste.</p>
+  <hr>
+  <p>Gracias a todos por la acogida que está teniendo la web</p>
+  <hr>
+  <p>Hoy estrenamos nuestra nueva sección dedicada a la música electrónica, esperamos que sea de vuestro agrado</p>
+  <hr>
+  <p>Tenéis ya diponible el nuevo disco de La Raiz, estrenado hace una semana. Esperamos que os guste!</p>
+
+
+
+</section>
+
+<section id = "discocomentado">
+
+
+      <section class="cardnov" style = "width:100%;height: 100%;">
+        <section id ="tit">
+          <h1>Disco más comentado</h1>
+
+        </section>
+        <section >
+          <a  href="{% url 'disco' %}?titulo={{discos_index.3.Titulo}}"><section>
+              <img id="trigger" class="imagen_cartanov" style = "width:130px;height:130px;margin-left:110px;margin-top:15px;" src ="{{discos_index.3.Imagen}}"/>
+          </section></a>
+        </section>
+        <section class="titulo_cartanov">
+             <p>{{discos_index.3.Titulo}} || {{discos_index.3.Artista}}</p>
+        </section>
+
+      </section>
+
+
+</section>
+
+<section id = "discocomentado">
+
+
+      <section class="cardnov" style = "width:100%;height: 100%;">
+        <section id ="tit">
+          <h1>Disco más comentado</h1>
+
+        </section>
+        <section >
+          <a  href="{% url 'disco' %}?titulo={{discos_index.5.Titulo}}"><section>
+              <img id="trigger" class="imagen_cartanov" style = "width:130px;height:130px;margin-left:110px;margin-top:15px;" src ="{{discos_index.5.Imagen}}"/>
+          </section></a>
+        </section>
+        <section class="titulo_cartanov">
+             <p>{{discos_index.5.Titulo}} || {{discos_index.5.Artista}}</p>
+        </section>
+
+      </section>
+
+
+</section>
+
+<section id = "discocomentado">
+
+
+      <section class="cardnov" style = "width:100%;height: 100%;">
+        <section id ="tit">
+          <h1>Disco más comentado</h1>
+
+        </section>
+        <section >
+          <a  href="{% url 'disco' %}?titulo={{discos_index.2.Titulo}}"><section>
+              <img id="trigger" class="imagen_cartanov" style = "width:130px;height:130px;margin-left:110px;margin-top:15px;" src ="{{discos_index.2.Imagen}}"/>
+          </section></a>        </section>
+        <section class="titulo_cartanov">
+             <p>{{discos_index.2.Titulo}} || {{discos_index.2.Artista}}</p>
+        </section>
+
+      </section>
+
+
+</section>
+
+<section id="ultimos_discos">
+
+  <h3>Ultimos discos por genero</h3>
+
+  <ul class = "nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#rock">Rock</a></li>
+    <li><a data-toggle="tab" href="#metal">Metal</a></li>
+  </ul>
+  <br>
+  <section class="tab-content">
+    <section id="rock" class="tab-pane fade in active">
+
+    <section id="mainboxnov">
+      <section class="cardnov" style = "width:25%;height:200px;margin-top:120px;margin-left:5px;">
+        <section>
+          <img class="imagen_cartanov" style="margin-left:50px;" src="{{discos_index.3.Imagen}}"/>
+        </section>
+        <section class="titulo_cartanov">
+             <p>{{discos_index.3.Artista}}</p>
+        </section>
+        <section class="texto_cartanov">
+            <p>{{discos_index.3.Titulo}}</p>
+        </section>
+      </section>
+
+    </section>
+    <section id="mainboxnov">
+      <section class="cardnov" style = "width:25%;height:200px;margin-top:120px;margin-left:5px;">
+        <section>
+          <img class="imagen_cartanov" style="margin-left:50px;" src="{{discos_index.1.Imagen}}"/>
+        </section>
+        <section class="titulo_cartanov">
+             <p>{{discos_index.1.Artista}}</p>
+        </section>
+        <section class="texto_cartanov">
+            <p>{{discos_index.1.Titulo}}</p>
+        </section>
+      </section>
+
+    </section>
+
+    <section id="mainboxnov">
+      <section class="cardnov" style = "width:25%;height:200px;margin-top:120px;margin-left:5px;">
+        <section>
+          <img class="imagen_cartanov" style="margin-left:50px;" src="{{discos_index.2.Imagen}}"/>
+        </section>
+        <section class="titulo_cartanov">
+             <p>{{discos_index.2.Artista}}</p>
+        </section>
+        <section class="texto_cartanov">
+            <p>{{discos_index.2.Titulo}}</p>
+        </section>
+      </section>
+
+    </section>
+
+
+
+    </section>
+
+    <section id="metal" class="tab-pane fade">
+
+    <section id="mainboxnov">
+      <section class="cardnov" style = "width:25%;height:200px;margin-top:120px;margin-left:5px;">
+        <section>
+          <img class="imagen_cartanov" style="margin-left:50px;" src="{{discos_index.6.Imagen}}"/>
+        </section>
+        <section class="titulo_cartanov">
+             <p>{{discos_index.6.Artista}}</p>
+        </section>
+        <section class="texto_cartanov">
+            <p>{{discos_index.6.Titulo}}</p>
+        </section>
+      </section>
+
+    </section>
+    <section id="mainboxnov">
+      <section class="cardnov" style = "width:25%;height:200px;margin-top:120px;margin-left:5px;">
+        <section>
+          <img class="imagen_cartanov" style="margin-left:50px;" src="{{discos_index.7.Imagen}}"/>
+        </section>
+        <section class="titulo_cartanov">
+             <p>{{discos_index.7.Artista}}</p>
+        </section>
+        <section class="texto_cartanov">
+            <p>{{discos_index.7.Titulo}}</p>
+        </section>
+      </section>
+
+    </section>
+
+    <section id="mainboxnov">
+      <section class="cardnov" style = "width:25%;height:200px;margin-top:120px;margin-left:5px;">
+        <section>
+          <img class="imagen_cartanov" style="margin-left:50px;" src="{{discos_index.9.Imagen}}"/>
+        </section>
+        <section class="titulo_cartanov">
+             <p>{{discos_index.9.Artista}}</p>
+        </section>
+        <section class="texto_cartanov">
+            <p>{{discos_index.9.Titulo}}</p>
+        </section>
+      </section>
+    </section>
+
+    </section>
+
+  </section>
+</section>
+
+<!-- HIDDEN / POP-UP DIV -->
+      <div id="pop-up">
+        <table class="table">
+              {% for i in "123456789"%}
+                <tr><td>Cancion {{i}}</td></tr>
+              {% endfor %}
+            </table>
+      </div>
+
+{%endblock%}

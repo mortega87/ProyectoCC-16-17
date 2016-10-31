@@ -1,0 +1,99 @@
+{% load staticfiles %}
+
+<html lang="es">
+	<head>
+ 		<meta charset="utf­-8">
+
+ 		<title>Tienda Musica</title>
+
+
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+		<link href="{% static 'css/card.css' %}" rel="stylesheet">
+		<link href="{% static 'css/menu.css' %}" rel="stylesheet">
+		<link href="{% static 'css/card_novedades.css' %}" rel="stylesheet">
+		<link href="{% static 'css/seccion.css' %}" rel="stylesheet">
+		<link href="{% static 'css/card_destacado.css' %}" rel="stylesheet">
+		<link href="{% static 'css/disco.css' %}" rel="stylesheet">
+		<link href="{% static 'css/formulario.css' %}" rel="stylesheet">
+		<link href="{% static 'css/campo_formulario.css' %}" rel="stylesheet">
+		<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Passion+One:900' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Oswald:700' rel='stylesheet' type='text/css'>
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="{% static 'js/validacion.js' %}" language="javascript" type="text/javascript"></script>
+
+  </head>
+
+  <body>
+
+    <aside class="publi">
+				<img src="{% static 'img/banner.jpg' %}" width="100%" height="100%">
+		</aside>
+
+    <section id="cabecera">
+
+				<section id="logo">
+					<img src="{% static 'img/logo.png' %}" width="100%" height="100%">
+				</section>
+				<h1>MusicShop</h1>
+		</section>
+		{% if 'username' in request.session and request.session.username == 'admin' %}
+		<section id="log">
+			<h3>Hola {{request.session.username}}</h3>
+			<br>
+			<a id="administrar" href="{% url 'inserta_disco' %}">Administrar</a>
+			<a id="logout" href="{% url 'logout'%}"> Logout </a>
+		</section>
+		{% elif 'username' in request.session %}
+		<section id="log">
+			<h3>Hola {{request.session.username}}</h3><br>
+			<a id="logout" href="{% url 'logout'%}" style="margin-left:65px;"> Logout </a>
+		</section>
+		{% else %}
+    <section id="log">
+				<form method="post" id="form_log" class="login" action="{% url 'login' %}">{% csrf_token %}
+					<input type="text" placeholder="Usuario" name="username" id="log1">
+					<input type="password" placeholder="Contraseña" name="contrasenia" id="log1">
+					<br>
+					<input id="Sign" type="submit" value="Acceder">
+					<a id="recov" href="{% url 'formulario' %}"> REGISTRATE </a>
+				</form>
+		</section>
+		{% endif %}
+		</header>
+
+    {% block content %}
+
+		{% endblock %}
+
+		<footer id="fot">
+			<p>Pie de Pagina</p>
+			<a href="/static/MemoriaMUSICSHOP.pdf"><p>DOCUMENTACIÓN</p></a>
+		</footer>
+
+		<script>
+       $(function() {
+        var moveLeft = 20;
+        var moveDown = 10;
+
+        $('img#trigger').hover(function(e) {
+          $('div#pop-up').show();
+            //.css('top', e.pageY + moveDown)
+            //.css('left', e.pageX + moveLeft)
+            //.appendTo('body');
+        }, function() {
+          $('div#pop-up').hide();
+        });
+
+        $('img#trigger').mousemove(function(e) {
+          $("div#pop-up").css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+        });
+
+      });
+    </script>
+
+
+	</body>
+</html>

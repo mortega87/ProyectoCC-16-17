@@ -1,0 +1,33 @@
+{%extends "base.html"%}
+{%block content%}
+
+{% load staticfiles %}
+
+<section id="seccion">
+
+  <h1>Insertar Disco</h1>
+
+</section>
+
+<section id="subtitulo">
+  <h1>Resgistra discos en la web</h1>
+  <a href="{% url 'index' %}">Volver a Index</a>
+<section>
+
+<section id="registro">
+    <form method="post" class="form-field" enctype="multipart/form-data" role=form action="{% url 'inserta_disco' %}">{% csrf_token %}
+
+      {{disc_form.artista}}
+
+      {{disc_form.titulo}}
+
+      {{disc_form.estilo}}
+
+      {{disc_form.portada}}
+      <input id="Sign" type="submit" value="Acceder">
+    </form>
+</section>
+
+
+
+  {%endblock%}

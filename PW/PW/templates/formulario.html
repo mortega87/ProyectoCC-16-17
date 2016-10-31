@@ -1,0 +1,60 @@
+{%extends "base.html"%}
+{%block content%}
+
+{% load staticfiles %}
+
+<nav>
+  <ul>
+      <li><a href="{% url 'index' %}">Home</a></li>
+      <li><a href="{% url 'rock' %}?genero=rock">Rock</a></li>
+      <li><a href="{% url 'rock' %}?genero=punk">Punk</a></li>
+      <li><a href="{% url 'rock' %}?genero=metal">Metal</a></li>
+      <li><a href="{% url 'rock' %}?genero=electronica">Electronica</a></li>
+  </ul>
+</nav>
+
+<section id="seccion">
+
+  <h1>Suscripción</h1>
+
+</section>
+
+<section id="subtitulo">
+  <h1>Suscríbete a nuestra web</h1>
+<section>
+
+<section id="registro">
+    <form method="post" name="formulario" onsubmit="return validarFormulario();" action="{%url 'formulario'%}">{% csrf_token %}
+      <input type="text" placeholder="Nombre" id="nombre" name="nombre" >
+      <br>
+      <input type="text" placeholder="Apellidos" name="apellidos">
+      <br>
+      <input type="text" placeholder="Nombre Usuario" name="username">
+      <br>
+      <input type="password" placeholder="Contraseña" name="contrasenia">
+      <br>
+      <input type="text" placeholder="Dirección" name="direccion" style="width:360px;">
+      <br>
+      <input type="text" placeholder="Ciudad" name="ciudad">
+      <br>
+      <input type="text" placeholder="Código Postal" name="direccion_postal" style="width:100px;">
+      <br>
+      <input type="text" placeholder="Provincia" name="provincia" style="width:100px;">
+      <br>
+      <input type="email" placeholder="email" name="email">
+      <br>
+      <input type="text" placeholder="DNI" name="dni" style="width:100px;">
+      <br>
+      <input type="text" placeholder="1234-5678-9101-1121" name="tarjeta" style="width:360px;" >
+      <br>
+      <textarea name="comentarios" placeholder="Observaciones" rows="10" cols="60"></textarea>
+
+
+      <input id="Sign" type="submit" value="Acceder">
+
+    </form>
+</section>
+
+
+
+{%endblock%}

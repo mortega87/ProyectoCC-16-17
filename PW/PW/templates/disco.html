@@ -1,0 +1,135 @@
+{%extends "base.html"%}
+{%block content%}
+
+{% load staticfiles %}
+
+<nav>
+  <ul>
+    <li><a href="{% url 'index' %}">Home</a></li>
+    <li><a href="{% url 'rock' %}?genero=rock">Rock</a></li>
+    <li><a href="{% url 'rock' %}?genero=punk">Punk</a></li>
+    <li><a href="{% url 'rock' %}?genero=metal">Metal</a></li>
+    <li><a href="{% url 'rock' %}?genero=electronica">Electronica</a></li>
+  </ul>
+</nav>
+
+<section id="seccion">
+
+  <h1>Sección {{datosdisco2.0.Estilo}}</h1>
+
+</section>
+
+<section id="masvendido">
+
+  <section id="texto">
+    <h1>Más Vendidos</h1>
+  </section>
+  {% for x in lista1|slice:":6" %}
+  <section id="mainboxnov">
+    <section class="cardnov" style = "width:100%;height: 19%;">
+      <section>
+        <img class="imagen_cartanov" src="{{x.Imagen}}"/>
+      </section>
+      <section class="titulo_cartanov">
+           <p>{{x.Artista}}</p>
+      </section>
+      <section class="texto_cartanov">
+          <p>{{x.Titulo}}</p>
+      </section>
+    </section>
+
+  </section>
+  {% endfor %}
+
+</section>
+
+<section id="titulo_disco">
+  <p>{{datosdisco2.0.Titulo}}</p>
+</section>
+
+<section id="destacado_canciones">
+
+  <section id="mainboxdisco">
+    <section class="carddisco" style = "width:100%;height: 100%;margin-top:3px;">
+      <section >
+        <img class="imagen_cartadest" src="{{datosdisco2.0.Imagen}}"/>
+      </section>
+
+
+
+      <section id="canciones">
+
+        <ul>
+          <li>Cancion 1</li>
+          <hr>
+          <li>Cancion 2</li>
+          <hr>
+          <li>Cancion 3</li>
+          <hr>
+          <li>Cancion 4</li>
+          <hr>
+          <li>Cancion 5</li>
+          <hr>
+          <li>Cancion 6</li>
+          <hr>
+          <li>Cancion 7</li>
+          <hr>
+          <li>Cancion 8</li>
+          <hr>
+          <li>Cancion 9</li>
+          <hr>
+          <li>Cancion 10</li>
+          <hr>
+        </ul>
+
+      </section>
+      <section id="descripcion">
+        <ul>
+          <li>Genero: {{datosdisco2.0.Estilo}}</li>
+          <hr>
+          <li>Precio: 15 euros</li>
+          <hr>
+          <li>Producido: Warner</li>
+          <hr>
+
+        </ul>
+
+
+
+      </section>
+
+
+
+      <section class="pie_cartadisco">
+           <p>{{datosdisco2.0.Artista}} // {{datosdisco2.0.Titulo}}</p>
+      </section>
+
+    </section>
+
+  </section>
+
+
+</section>
+
+{% if 'username' in request.session %}
+
+  <a href="{% url 'comentar' %}"><input style="margin-bottom:100px;" id="comentar" type="submit" value="COMENTAR"></a>
+
+{% else %}
+
+  <a href="{% url 'formulario' %}"<p id="comentar" style="	font-family: 'Lobster', cursive;margin-bottom:100px;">Registrate en la web para comentar</p></a>
+
+{% endif %}
+
+<section id="comentarios">
+<h1>COMENTARIOS</h1>
+<hr>
+{% for x in com %}
+  <p> Usuario: {{x.Usuario}}</p>
+  <p>Disco: {{x.Titulo}}</p>
+  <p>{{x.Comentario}}</p>
+  <hr>
+{%endfor%}
+</section>
+
+{%endblock%}

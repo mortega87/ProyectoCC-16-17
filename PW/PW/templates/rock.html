@@ -1,0 +1,97 @@
+{%extends "base.html"%}
+{%block content%}
+
+{% load staticfiles %}
+
+<nav>
+  <ul>
+      <li><a href="{% url 'index' %}">Home</a></li>
+      <li><a href="{% url 'rock' %}?genero=rock">Rock</a></li>
+      <li><a href="{% url 'rock' %}?genero=punk">Punk</a></li>
+      <li><a href="{% url 'rock' %}?genero=metal">Metal</a></li>
+      <li><a href="{% url 'rock' %}?genero=electronica">Electronica</a></li>
+  </ul>
+</nav>
+
+<section id="seccion">
+
+  <h1>Sección {{datosdisco.0.Estilo}}</h1>
+
+</section>
+
+
+<section id="masvendido">
+
+  <section id="texto">
+    <h1>Más Vendidos</h1>
+  </section>
+  {% for y in datosdisco %}
+  <section id="mainboxnov">
+    <section class="cardnov" style = "width:100%;height: 19%;margin-top:10px;">
+      <section>
+        <a  href="{% url 'disco' %}?titulo={{y.Titulo}}">
+          <section>
+            <img class="imagen_cartanov" style="margin-top:10px;" src ="{{y.Imagen}}"/>
+        </section></a>
+      </section>
+      <section class="titulo_cartanov">
+           <p>{{y.Artista}}</p>
+      </section>
+      <section class="texto_cartanov">
+          <p>{{y.Titulo}}</p>
+      </section>
+    </section>
+
+  </section>
+{%endfor%}
+
+</section>
+
+<section id="destacado">
+  <section id="mainboxdest">
+    <section class="carddest">
+      <a  href="{% url 'disco' %}?titulo={{datosdisco.2.Titulo}}"><section href="{% url 'disco' %}">
+          <img class="imagen_cartadest" style="margin-top:10px;" src ="{{datosdisco.2.Imagen}}"/>
+      </section></a>
+      <section class="titulo_cartadest">
+           <p>{{datosdisco.2.Artista}}</p>
+      </section>
+      <section class="texto_cartadest">
+          <p>{{datosdisco.2.Titulo}}</p>
+      </section>
+    </section>
+  </section>
+
+</section>
+
+<section id="discos" style= "overflow: scroll;">
+
+  {% for x in datosdisco %}
+  <section id="mainbox">
+    <section class="card"  style = "margin-left:10px;">
+
+      <a  href="{% url 'disco' %}?titulo={{x.Titulo}}"><section href="{% url 'disco' %}">
+          <img class="imagen_carta" style="margin-top:10px;" src ="{{x.Imagen}}"/>
+      </section></a>
+
+      <section class="titulo_carta">
+           <p>{{x.Artista}}</p>
+      </section>
+      <section class="texto_carta">
+          <p>{{x.Titulo}}</p>
+      </section>
+    </section>
+  </section>
+
+  {% endfor %}
+
+</section>
+
+
+
+
+
+
+
+
+{%endblock%}

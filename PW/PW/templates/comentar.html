@@ -1,0 +1,34 @@
+{%extends "base.html"%}
+{%block content%}
+
+{% load staticfiles %}
+
+<section style="margin-left:100px;" id="titulo_disco">
+  <p style="margin-left:150px;">Comenta en nuestra web</p>
+</section>
+
+<nav style="margin-left:90px;">
+  <ul>
+      <li><a href="{% url 'index' %}">Home</a></li>
+      <li><a href="{% url 'rock' %}?genero=rock">Rock</a></li>
+      <li><a href="{% url 'rock' %}?genero=punk">Punk</a></li>
+      <li><a href="{% url 'rock' %}?genero=metal">Metal</a></li>
+      <li><a href="{% url 'rock' %}?genero=electronica">Electronica</a></li>
+  </ul>
+</nav>
+
+<section id="comentarios" style="margin-left:120px;">
+  <form method="post" role=form action="{% url 'reg_comentario' %}"> {% csrf_token %}
+    <input type="text" value="{{request.session.username}}" name="usuario_comentario" style="margin-left:15%;width:500px;margin-top:20px;" >
+    <input type="text" name="titulo_disco" style="margin-left:15%;width:500px;margin-top:20px;" >
+    <textarea name="contenido_comentario" placeholder="Comentario" rows="10" cols="60" style="margin-left:15%;"></textarea>
+    <input style="margin-bottom:100px;" id="comentar" type="submit" value="Registra Comentario">
+  </form>
+
+
+</section>
+
+
+
+
+{% endblock %}

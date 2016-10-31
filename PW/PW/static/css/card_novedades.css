@@ -1,0 +1,63 @@
+.cardnov{
+float: left;
+background-color: #FFFFFF;
+border: 1px solid gray;
+box-shadow: 3px 3px 5px #000000;
+border-radius: .6em;
+clear:inherit;
+
+}
+
+.imagen_cartanov{
+	float:left;
+	height: 100px;
+  width: 100px;
+  margin-top: 7px;
+	margin-left: 33%;
+
+}
+
+.titulo_cartanov{
+float:left;
+font-weight: lighter;
+margin-left: 5px;
+margin-top: 10px;
+width:85%;
+height: 10%;
+
+clear:both;
+}
+
+.titulo_cartanov p{
+	float:left;
+	margin-left:20px;
+	font-size: 20px;
+	font-family: 'Lobster', cursive;
+	margin-bottom: 20px;
+	margin-top: 0px;
+}
+
+.texto_cartanov{
+	float:left;
+  margin-top: 5px;
+	margin-left: 5px;
+	width:85%;
+	height: 15%;
+}
+
+.texto_cartanov p{
+
+	float:left;
+	margin-left:20px;
+	margin-top: 0px;
+	font-family: 'Lobster', cursive;
+
+}
+
+#mainboxnov{
+
+  font-family: calibri;
+  box-sizing: border-box;
+  justify-content: center;
+
+}
