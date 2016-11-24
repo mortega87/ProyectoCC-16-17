@@ -1,0 +1,32 @@
+---
+- hosts: all
+  become: yes
+  remote_user: ubuntu
+ 
+  tasks:
+  - name: Actualizar sistema
+    apt: update_cache=yes
+
+  - name: Instalar git
+    apt: pkg=git state=latest
+  
+  - name: Instalar MongoDB
+    apt: name=mongodb state=latest
+
+  - name: Instalar Pip
+    apt: name=python-setuptools state=present
+    apt: name=python-dev state=present
+    apt: name=python-pip state=present
+
+  - name: Instalar PyMongo
+    pip: name=pymongo
+
+  - name: Instalar Python
+    pip: name=python
+
+  - name: Instalar virtualenv
+    pip: name=virtualenv
+
+  - name: Instalar Django
+    pip: name=django
+ 
