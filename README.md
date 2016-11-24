@@ -29,4 +29,4 @@ En primer lugar, vamos a comentar como se ha realizado el provisionamiento para 
 
 En la siguiente imagen vemos el fichero de instalación de los paquetes necesarios para provisionar la máquina que va a ejecutar el proyecto. Por tanto, una vez ejecutado el fichero de Ansible dispondremos de todas las herramientas necesarias para dicha ejecución.
 
-![alt text](https://rawgit.com/mortega87/Images/master/ansible.png "ansible")
+![alt tag](https://rawgit.com/mortega87/Images/master/ansible.png)
