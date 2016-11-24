@@ -20,3 +20,13 @@ Así, separa la mínima funcionalidad principal de la funcionalidad extendida y 
 La herramienta principal de desarrollo es Django, un framework de código abierto, escrito en Python y que se apoya en el modelo de diseño MVC (Modelo-Vista-Controlador). Este modelo MVC define una forma de desarrollar software en la que el código para definir y acceder a los datos (el modelo) está separado del pedido lógico de asignación de ruta (el controlador), que a su vez está separado de la interfaz del usuario (la vista).
 
 Para la persistencia de datos se ha decidido utilizar la base de datos NoSQL y de código abierto MongoDB, la cual se integra perfectamente en Django. Al no necesitar relaciones para la base de datos se utilizará MongoDB, y hará que el tamaño de la base de datos sea muy ligero.
+
+### Provisionamiento
+
+Se ha realizado provisionamiento con dos de las plataformas de software libre más utilizadas, en este caso Ansible y Chef.
+
+En primer lugar, vamos a comentar como se ha realizado el provisionamiento para la máquina que va a ejecutar el proyecto con Ansible, el cuál está programado en Python y utiliza ficheros de tipo YAML.
+
+En la siguiente imagen vemos el fichero de instalación de los paquetes necesarios para provisionar la máquina que va a ejecutar el proyecto. Por tanto, una vez ejecutado el fichero de Ansible dispondremos de todas las herramientas necesarias para dicha ejecución.
+
+![alt text](https://rawgit.com/mortega87/Images/master/ansible.png "ansible")
