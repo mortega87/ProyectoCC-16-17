@@ -29,11 +29,12 @@ En primer lugar, vamos a comentar como se ha realizado el provisionamiento para 
 
 En la siguiente imagen vemos el fichero de instalación de los paquetes necesarios para provisionar la máquina que va a ejecutar el proyecto. Por tanto, una vez ejecutado el fichero de Ansible, llamado playbook, dispondremos de todas las herramientas necesarias para dicha ejecución.
 
-Para la ejecución del siguiente playbook usamos el siguiente comando:
+![alt tag](https://rawgit.com/mortega87/Images/master/ansible.png)
+
+Para la ejecución del playbook usamos el siguiente comando:
 
 <pre>ansible-playbook /etc/ansible/playbooks/playbook.yml</pre>
 
-![alt tag](https://rawgit.com/mortega87/Images/master/ansible.png)
 
 Para realizar el provisionamiento con una herramienta distinta he decidido utilizar **Chef**. Está escrita en Ruby y es otra de las más utilizadas para provisionamiento y sencillo de usar. En este caso, he utilizado chef-solo, por tanto, es necesario tener instalado dicho paquete en le cliente y así poder ejecutar el fichero.
 
