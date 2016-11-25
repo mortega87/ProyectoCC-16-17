@@ -40,6 +40,72 @@
 
 <p>Para la persistencia de datos se ha decidido utilizar la base de datos NoSQL y de código abierto MongoDB, la cual se integra perfectamente en Django. Al no necesitar relaciones para la base de datos se utilizará MongoDB, y hará que el tamaño de la base de datos sea muy ligero.</p>
 
+<h3>
+<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Provisionamiento</h3>
+
+<p>Para desplegar MusicSpace es necesario tener instalados varios paquetes, en este caso vamos a necesitar tener instalado Python, MongoDB, Django y diversos paquetes de los que dependen los mismos. Para realizar estos pasos de forma automatizada, vamos a utilizar dos herramientas para dicha provisión, de hecho son las dos más utilizadas actualmente, Ansible y Chef.</p>
+
+<p>En primer lugar, se va a comentar como se ha realizado la conexión con la máquina destino, la cual va a ser la que va a disponer de las herramientas citadas anteriormente y la que podrá ejecutar la web. Dispongo de una máquina con el sistema operativo Ubuntu 14.04 en el servicio de Amazon AWS, uno de los IaaS más valorados del mercado, con la cual conecto a ella en remoto de la siguiente forma:</p>
+
+<pre>ssh -i ./instace-ami.pem ubuntu@ec2-35-162-52-222.us-west-2.compute.amazonaws.com</pre>
+
+<p>Donde instance-ami.pem contiene la clave necesaria para conectar con la máquina mediante ssh. Por tanto, de esta forma vemos que la conexión es correcta y posteriormente podremos comprobar que los paquetes se han instalado correctamente.<p>
+
+<p>En primer lugar, vamos a comentar como se ha realizado el provisionamiento para la máquina que va a ejecutar el proyecto con Ansible, el cuál está programado en Python y utiliza ficheros de tipo YAML.</p>
+
+<p>Para la instalación de Ansible en nuestra máquina local vamos a ejecutar el siguiente comando</p>
+
+<pre>sudo pip install ansible</pre>
+
+<p>Una vez instalado, nos vamos a dirigir a /etc/ansible, donde vamos a añadir nuestros ficheros de configuración para poder ejecutar el playbook y vamos a especificar los host que vamos a provisionar</p>
+
+<p>La siguiente imagen corresponde al fichero host, donde tenemos que especificar el nombre asignado a la máquina que vamos a provisionar ,su ip y el fichero con la clave privada. En este caso la máquina especificada es la máquina que, como comente anteriormente, tengo en AWS</p>
+
+<br>
+
+<img src="https://rawgit.com/mortega87/Images/master/ansible_host.png" alt="ansible_host">
+
+<p>A continuación, vemos el archivo de configuración de Ansible, con los parametros activos que necesitamos especificar.</p>
+
+<br>
+
+<img src="https://rawgit.com/mortega87/Images/master/ansible_config.png" alt="ansible_conf">
+
+<p>Por último, disponemos del fichero de instalación de los paquetes necesarios para provisionar la máquina que va a ejecutar el proyecto. Por tanto, una vez ejecutado el fichero de Ansible, llamado playbook, dispondremos de todas las herramientas necesarias para dicha ejecución.</p>
+
+<br>
+
+<img src="https://rawgit.com/mortega87/Images/master/ansible.png" alt="ansible_playbook">
+
+<p>Una vez definidos estos ficheros, vamos a ejecutar el playbook de Ansible mediante del siguiente comando.</p>
+
+<pre>ansible-playbook /etc/ansible/playbooks/playbook.yml</pre>
+
+<p>En la siguiente captura de pantalla comprobamos que la ejecución de las tareas definidas en el playbook se han realizado correctamente.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/ansible_ejecucion.png" alt="ansible_playbook">
+
+<p>A continuación, vamos a realizar el aprovisionamiento con Chef</p>
+
+<p>Para realizar el provisionamiento con una herramienta distinta he decidido utilizar Chef. Está escrita en Ruby y es otra de las más utilizadas para provisionamiento y sencillo de usar. En este caso, he utilizado chef-solo, por tanto, es necesario tener instalado dicho paquete en le cliente y así poder ejecutar el fichero.</p>
+
+<p>Necesitamos varios ficheros para provisionar una máquina.</p>
+
+<p>En primer lugar el fichero default.rb, donde hacemos la descripción de los paquetes o receta que vamos a necesitar en el provisionamiento.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/chef_default.png" alt="chef_def">
+
+<p>El siguiente fichero es node.json, donde tenemos que indicar el nombre del recipiente que vamos a utilizar.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/chef_node.png" alt="chef_node">
+
+<p>Por último tenemos el fichero solo.rb en el cual vamos a indicar los directorios que componen el provisionamiento. Podemos indicarlo de la siguiente forma.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/chef_solo.png" alt="chef_solo">
+
+<p>En la siguiente imagen, comprobamos que las instalaciones se han realizado correctamente.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/chef_ejecucion.png" alt="chef_solo">
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/mortega87/ProyectoCC-16-17">Proyectocc-16-17</a> is maintained by <a href="https://github.com/mortega87">mortega87</a>.</span>
