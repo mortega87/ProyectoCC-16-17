@@ -57,3 +57,69 @@ Una vez con estos ficheros completados, ejecutamos en la máquina que vamos a pr
 <pre>sudo chef-solo -c chef/solo.rb</pre>
 
 Tener en cuenta que la máquina debe de contar con el paquete chef-solo instalado.
+
+### Orquestación.
+
+Para la orquestación de máquinas virtuales se ha utilizado la herramienta de software libre Vagrant. Está desarrollada en Ruby y se complementa perfectamente con sofware de virtualización como VirtualBox y con software de aprovisionamiento como Ansible.
+
+En primer lugar, instalamos VirtualBox y Vagrant:
+
+<pre>sudo apt-get install virtualbox dkms</pre>
+
+<pre>sudo apt-get -y install vagrant</pre>
+
+Iniciamos el servicio Vagrant.
+
+<pre>vagrant init</pre>
+
+Esto nos creará en nuestro directorio y el fichero Vagrantfile, asi que, a continuación, vamos a comentar el contenido del fichero para nuestra orquestación.
+
+<pre>
+  #Fichero Vagrant para crear y provisionar tres máquinas virtuales Ubuntu 14.04.
+
+  Vagrant.configure(2) do |config|
+
+    #Definimos la configuración de las tres máquinas virtuales.
+
+    config.vm.define "vm1" do |vm1|
+      vm1.vm.box = "ubuntu/trusty64"
+    end
+
+    config.vm.define "vm2" do |vm2|
+      vm2.vm.box = "ubuntu/trusty64"
+    end
+
+    config.vm.define "vm3" do |vm3|
+      vm3.vm.box = "ubuntu/trusty64"
+    end
+
+    #Especificamos cual será el fichero de ansible que va a provisionar las tres máquinas virtuales.
+
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = "playbook.yml"
+    end
+
+  end
+</pre>
+
+Creamos tres máquinas virtuales Ubuntu 14.04 y el aprovisionamiento se realizará con playbook.yml, utilizado anteroirmente y situado en el mismo directorio del Vagrantfile.
+
+Ejecutamos el comando siguiente para levantar, crear y aprovisionar las máquinas virtuales.
+
+<pre>vagrant up</pre>
+
+
+Vemos que se crean y aprovisionan correctamente:
+
+![alt tag](https://rawgit.com/mortega87/Images/master/vagrant1.png)
+
+![alt tag](https://rawgit.com/mortega87/Images/master/vagrant3.png)
+
+Para conectar con ellas ejecutamos:
+
+<pre>vagrant ssh vm1</pre>
+
+Donde vm1 es el nombre que hemos especificado de la máquina en Vagrantfile, pudiendo ser sustituido por cualquiera de las demás.
+
+
+Más información en la web del proyecto.
