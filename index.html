@@ -108,7 +108,7 @@
 <img src="https://rawgit.com/mortega87/Images/master/chef_ejecucion.png" alt="chef_solo">
 
 <h3>
-<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Corrección compañero</h3>
+<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Corrección provisión compañero</h3>
 
 <p>He realizado la corrección de los playbooks del compañero Jesús García Manday. He ejecutado sus dos playbooks para Ansible llamados updateSys.yml y mySql.yml sobre la máquina utilizada anteriormente corriendo en el servicio AWS de Amazon.</p>
 
@@ -124,7 +124,145 @@
 
 <p>Como vemos en las imágenes, la instalación se ha realizado correctamente.</p>
 
+<h3>
+<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Orquestación con Vagrant</h3>
 
+<p>Para la orquestación de máquinas virtuales se ha utilizado la herramienta de software libre Vagrant. Está desarrollada en Ruby y se complementa perfectamente con sofware de virtualización como VirtualBox y con software de aprovisionamiento como Ansible.</p>
+
+<p>Para instalar la herramienta Vagrant, primero tenemos que instalar VirtualBox, ya que es el software de virtualización seleccionado para utilizar Vagrant, por tanto utilizamos el comando siguiente:</p>
+
+<pre>sudo apt-get install virtualbox dkms</pre>
+
+<p>Una vez instalado VirtualBox, procedemos a la instalación de Vagrant mediante el siguieten comando:</p>
+
+<pre>sudo apt-get -y install vagrant</pre>
+
+<p>Vamos ahora a crear el directorio en el que vamos a realizar la configuración Vagrant mediante el Vagrantfile. Para ello, creamos un directorio en nuestro sistema e iniciamos el servicio Vagrant, por tanto, ejecutamos los siguientes comandos. </p>
+
+<pre>mkdir vagrant</pre>
+
+<pre>vagrant init</pre>
+
+<p>Ahora tenemos ya creado nuestro directorio y nuestro fichero Vagrantfile, asi que, a continuación, vamos a comentar el contenido del fichero para nuestra orquetación.</p>
+
+
+<p>En este punto, tenemos que decidir qué sistema operativo vamos a utilizar y cuántas máquinas vamos a necesitar en nuestra instalación. Otro punto importante a comentar es la provisión que vamos a realizar sobre dichas máquinas virtuales. Para ello, he utilizado Ansible e incrustamos las intrucciones necesarias para la ejecución de dicho provisionamiento. Como comentamos anteriormente, Ansible y Vagrant se complementan perfectamente, y es por ello que la propia provisión la insertaremos en el fichero de configuración Vagrant, como vemos a continuación.</p>
+
+<pre>
+  #Fichero Vagrant para crear y provisionar tres máquinas virtuales Ubuntu 14.04.
+
+  Vagrant.configure(2) do |config|
+
+    #Definimos la configuración de las tres máquinas virtuales.
+
+    config.vm.define "vm1" do |vm1|
+      vm1.vm.box = "ubuntu/trusty64"
+    end
+
+    config.vm.define "vm2" do |vm2|
+      vm2.vm.box = "ubuntu/trusty64"
+    end
+
+    config.vm.define "vm3" do |vm3|
+      vm3.vm.box = "ubuntu/trusty64"
+    end
+
+    #Especificamos cual será el fichero de ansible que va a provisionar las tres máquinas virtuales.
+
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = "playbook.yml"
+    end
+
+  end
+
+</pre>
+
+<p>Si observamos el fichero Vagrantfile, vamos a crear 3 máquinas virtuales, con el sistema operativo Ubuntu 14.04. Como podemos observar, las últimas instrucciones pertenecen al provisionamiento Ansible. Una vez creadas las máquinas virtuales, se realiza la provisión de las mismas mediante la ejecución de playbook.yml, el cual se va a situar en el mismo directorio que nuestro Vagrantfile. Vamos a obervar ahora el conteniedo de nuestro playbook, utilizado en el apartado anterior de la documentación.</p>
+
+<pre>
+  ---
+- hosts: all
+  become: yes
+  remote_user: ubuntu
+
+  tasks:
+  - name: Actualizar sistema
+    apt: update_cache=yes
+
+  - name: Instalar git
+    apt: pkg=git state=latest
+
+  - name: Instalar MongoDB
+    apt: name=mongodb state=latest
+
+  - name: Instalar Pip
+    apt: name=python-setuptools state=present
+    apt: name=python-dev state=present
+    apt: name=python-pip state=present
+
+  - name: Instalar PyMongo
+    pip: name=pymongo
+
+  - name: Instalar Python
+    pip: name=python
+
+  - name: Instalar virtualenv
+    pip: name=virtualenv
+
+  - name: Instalar Django
+    pip: name=django
+</pre>
+
+<p>En el playbook, especificamos los paquetes o el software que vamos a necesitar en nuestras máquinas virtuales creadas con Vagrant.</p>
+
+<p>Una vez que tenemos esta organización de ficheros y el propio contenido de ellos, procedemos a la ejecución de Vagrant utilizando el siguiente comando.</p>
+
+<pre>vagrant up</pre>
+
+<p>Cuando finalice, podremos acceder a cada una de nuestras máquinas instaladas. Para ello usamos el siguiente comando, donde nombre_máquina va a corresponder al nombre especificado en el Vagrantfile, en este caso podría ser vm1, vm2 o vm3.</p>
+
+<pre>vagrant ssh nombre_máquina</pre>
+
+<p>En las siguientes imágenes se muestra cómo se realiza correctamente la creación, el levantamiento, provisionamiento de las máquinas virtuales, así como una muestra de que están corriendo en VirtualBox.</p>
+
+<p>En las primeras cuatro imágenes vemos como se instala y crea la primera máquina, se aprovisiona y comienza con la segunda.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/vagrant1.png" alt="vagrant">
+
+<img src="https://rawgit.com/mortega87/Images/master/vagrant2.png" alt="vagrant">
+
+<img src="https://rawgit.com/mortega87/Images/master/vagrant3.png" alt="vagrant">
+
+<img src="https://rawgit.com/mortega87/Images/master/vagrant4.png" alt="vagrant">
+
+<p>Mostramos una lista de los boxes de Vagrant creados en mi equipo.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/vagrant5.png" alt="vagrant">
+
+<p>Y por último vemos como están creadas y corriendo en VirtualBox.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/vagrant6.png" alt="vagrant">
+
+
+<p>Vagrant nos permite también realizar sobre ellas otra serie de acciones como son:</p>
+
+<p>Salir de la máquina virtual:</p>
+
+<pre>exit</pre>
+
+<p>Apagar la máquina virtual:</p>
+
+<pre>vagrant halt nombre_máquina</pre>
+
+<p>Eliminar la máquina virtual:</p>
+
+<pre>vagrant destroy nombre_máquina.</pre>
+
+<p>O ver la lista de máquinas virtuales de las que disponemos:</p>
+
+<pre>vagrant box list</pre>
+
+<p>En conclusión, con Vagrant estamos ante una herramienta muy potente de orquestación de máquinas virtuales, la cual nos permite no solo automatizar el proceso de creación de nuestro entorno, sino provisionar el mismo de una manera sencilla.</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/mortega87/ProyectoCC-16-17">Proyectocc-16-17</a> is maintained by <a href="https://github.com/mortega87">mortega87</a>.</span>
