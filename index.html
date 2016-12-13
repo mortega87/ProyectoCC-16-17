@@ -262,6 +262,63 @@
 
 <pre>vagrant box list</pre>
 
+<p>Aparte de esto, he realizado tambíen la orquestación en cloud utilizando el servicio de Microsoft Azure.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/azurevagrant1.png" alt="vagrant">
+
+<p>Podemos ver en la siguiente imagen como se realiza la instalación para el plugin de azure para Vagrant y a continuación creamos el bos para nuestra máquina virtual.</p>
+
+<p>Y por último, creamos la maquina virtual a través de nuestro siguiente Vagrantfile, donde previamente tendremos que haber congfigurado nuestra cuenta de Azure mediante la herramienta azure-cli. Vemos a continuación como ha quedado el Vagrantfile y una captura de comprobación de la creación de la máquina virtual.</p>
+
+<pre>
+  VAGRANTFILE_API_VERSION = '2'
+
+  Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+    config.vm.box     = 'azure1'
+    config.vm.box_url = 'https://github.com/msopentech/vagrant-azure/raw/master/dummy.box'
+
+    config.ssh.username         = 'vagrant'
+
+    config.vm.provider :azure do |azure|
+    	#full path to pem file
+  	azure.mgmt_certificate = File.expand_path('~/.ssh/azurevagrant.key')
+      azure.mgmt_endpoint = 'https://management.core.windows.net'
+
+      #to get this run: azure account list
+      azure.subscription_id = '15ae55f3-69f0-4cab-9374-fa39efad56fe'
+
+  	azure.storage_acct_name = '' # optional
+
+  	#to get this run: azure vm image list
+  	azure.vm_image = 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_2-LTS-amd64-server-20150506-en-us-30GB'
+
+      azure.vm_user = 'vagrant' # defaults to 'vagrant' if not provided
+      azure.vm_password = 'vagrant123#@!' # min 8 characters. should contain a lower case letter, an uppercase letter, a number and a special character
+
+  	azure.vm_name = 'azurevagrant-django1' # max 15 characters. contains letters, number and hyphens. can start with letters and can end with letters and numbers
+      azure.cloud_service_name = '' # same as vm_name. leave blank to auto-generate
+
+      ##to get this run: azure vm location list
+      azure.vm_location = 'North Europe'
+
+      azure.tcp_endpoints = '3389:53389' # opens the Remote Desktop internal port that listens on public port 53389. Without this, you cannot RDP to a Windows VM.
+      azure.winrm_https_port = 5986
+  	azure.ssh_port = '22'
+
+      azure.winrm_transport = %w(https)
+    end
+
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = "playbook.yml"
+    end
+
+  end
+</pre>
+
+<p>Como podemos observar, hemos utilizado el mismo playbook que para local.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/azurevagrant2.png" alt="vagrant">
+
 <p>En conclusión, con Vagrant estamos ante una herramienta muy potente de orquestación de máquinas virtuales, la cual nos permite no solo automatizar el proceso de creación de nuestro entorno, sino provisionar el mismo de una manera sencilla.</p>
 
       <footer class="site-footer">
