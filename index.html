@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Proyectocc-16-17 by mortega87</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">MusicSpace</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/mortega87/ProyectoCC-16-17" class="btn">View on GitHub</a>
+      <a href="https://github.com/mortega87/ProyectoCC-16-17/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/mortega87/ProyectoCC-16-17/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h3>
+<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descripción del problema</h3>
+
+<p>Somos muchas las personas amantes de la música que no disponemos de una plataforma que nos proporcione información y permita preescuchar albumes. Si a esto añadimos que las webs existentes están ancladas en los mismos estilos, surge la necesidad de realizar una web que abarque estilos más minoritarios de música. Por ello surge MusicSpace.</p>
+
+<p>Mi intención con esta aplicación web es satisfacer la necesidad de todas aquellas personas que deseen poder acceder a una aplicación web con una interfaz atractiva, novedosa, multiplataforma y eficiente.</p>
+
+<h3>
+<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Arquitectura de desarrollo</h3>
+
+<p>MusicSpace sigue una arquitectura microkernel, ya que todos los servicios se ejecutan desde la misma máquina. Por tanto, es el núcleo central el que se comunica con la base de datos y así, comunica la aplicación web con la base de datos, gestionando las peticiones e inserciones de datos a la misma.</p>
+
+<p>Así, separa la mínima funcionalidad principal de la funcionalidad extendida y las partes del cliente, implementando el propio microkernel los servicios principales y manejando la comunicación y los recursos.</p>
+
+<h3>
+<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tecnología utilizada</h3>
+
+<p>La herramienta principal de desarrollo es Django, un framework de código abierto, escrito en Python y que se apoya en el modelo de diseño MVC (Modelo-Vista-Controlador). Este modelo MVC define una forma de desarrollar software en la que el código para definir y acceder a los datos (el modelo) está separado del pedido lógico de asignación de ruta (el controlador), que a su vez está separado de la interfaz del usuario (la vista).</p>
+
+<p>Para la persistencia de datos se ha decidido utilizar la base de datos NoSQL y de código abierto MongoDB, la cual se integra perfectamente en Django. Al no necesitar relaciones para la base de datos se utilizará MongoDB, y hará que el tamaño de la base de datos sea muy ligero.</p>
+
+<h3>
+<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Provisionamiento</h3>
+
+<p>Para desplegar MusicSpace es necesario tener instalados varios paquetes, en este caso vamos a necesitar tener instalado Python, MongoDB, Django y diversos paquetes de los que dependen los mismos. Para realizar estos pasos de forma automatizada, vamos a utilizar dos herramientas para dicha provisión, de hecho son las dos más utilizadas actualmente, Ansible y Chef.</p>
+
+<p>En primer lugar, se va a comentar como se ha realizado la conexión con la máquina destino, la cual va a ser la que va a disponer de las herramientas citadas anteriormente y la que podrá ejecutar la web. Dispongo de una máquina con el sistema operativo Ubuntu 14.04 en el servicio de Amazon AWS, uno de los IaaS más valorados del mercado, con la cual conecto a ella en remoto de la siguiente forma:</p>
+
+<pre>ssh -i ./instace-ami.pem ubuntu@ec2-35-162-52-222.us-west-2.compute.amazonaws.com</pre>
+
+<p>Donde instance-ami.pem contiene la clave necesaria para conectar con la máquina mediante ssh. Por tanto, de esta forma vemos que la conexión es correcta y posteriormente podremos comprobar que los paquetes se han instalado correctamente.<p>
+
+<p>En primer lugar, vamos a comentar como se ha realizado el provisionamiento para la máquina que va a ejecutar el proyecto con Ansible, el cuál está programado en Python y utiliza ficheros de tipo YAML.</p>
+
+<p>Para la instalación de Ansible en nuestra máquina local vamos a ejecutar el siguiente comando</p>
+
+<pre>sudo pip install ansible</pre>
+
+<p>Una vez instalado, nos vamos a dirigir a /etc/ansible, donde vamos a añadir nuestros ficheros de configuración para poder ejecutar el playbook y vamos a especificar los host que vamos a provisionar</p>
+
+<p>La siguiente imagen corresponde al fichero host, donde tenemos que especificar el nombre asignado a la máquina que vamos a provisionar ,su ip y el fichero con la clave privada. En este caso la máquina especificada es la máquina que, como comente anteriormente, tengo en AWS</p>
+
+<br>
+
+<img src="https://rawgit.com/mortega87/Images/master/ansible_host.png" alt="ansible_host">
+
+<p>A continuación, vemos el archivo de configuración de Ansible, con los parametros activos que necesitamos especificar.</p>
+
+<br>
+
+<img src="https://rawgit.com/mortega87/Images/master/ansible_config.png" alt="ansible_conf">
+
+<p>Por último, disponemos del fichero de instalación de los paquetes necesarios para provisionar la máquina que va a ejecutar el proyecto. Por tanto, una vez ejecutado el fichero de Ansible, llamado playbook, dispondremos de todas las herramientas necesarias para dicha ejecución.</p>
+
+<br>
+
+<img src="https://rawgit.com/mortega87/Images/master/ansible.png" alt="ansible_playbook">
+
+<p>Una vez definidos estos ficheros, vamos a ejecutar el playbook de Ansible mediante del siguiente comando.</p>
+
+<pre>ansible-playbook /etc/ansible/playbooks/playbook.yml</pre>
+
+<p>En la siguiente captura de pantalla comprobamos que la ejecución de las tareas definidas en el playbook se han realizado correctamente.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/ansible_ejecucion.png" alt="ansible_playbook">
+
+<p>A continuación, vamos a realizar el aprovisionamiento con Chef</p>
+
+<p>Para realizar el provisionamiento con una herramienta distinta he decidido utilizar Chef. Está escrita en Ruby y es otra de las más utilizadas para provisionamiento y sencillo de usar. En este caso, he utilizado chef-solo, por tanto, es necesario tener instalado dicho paquete en le cliente y así poder ejecutar el fichero.</p>
+
+<p>Necesitamos varios ficheros para provisionar una máquina.</p>
+
+<p>En primer lugar el fichero default.rb, donde hacemos la descripción de los paquetes o receta que vamos a necesitar en el provisionamiento.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/chef_default.png" alt="chef_def">
+
+<p>El siguiente fichero es node.json, donde tenemos que indicar el nombre del recipiente que vamos a utilizar.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/chef_node.png" alt="chef_node">
+
+<p>Por último tenemos el fichero solo.rb en el cual vamos a indicar los directorios que componen el provisionamiento. Podemos indicarlo de la siguiente forma.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/chef_solo.png" alt="chef_solo">
+
+<p>En la siguiente imagen, comprobamos que las instalaciones se han realizado correctamente.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/chef_ejecucion.png" alt="chef_solo">
+
+<h3>
+<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Corrección provisión compañero</h3>
+
+<p>He realizado la corrección de los playbooks del compañero Jesús García Manday. He ejecutado sus dos playbooks para Ansible llamados updateSys.yml y mySql.yml sobre la máquina utilizada anteriormente corriendo en el servicio AWS de Amazon.</p>
+
+<p>En las siguientes capturas vemos que el funcionamiento ha sido correcto</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/mysql.png" alt="mysql">
+
+<br>
+
+<img src="https://rawgit.com/mortega87/Images/master/updatesys.png" alt="mysql">
+
+<br>
+
+<p>Como vemos en las imágenes, la instalación se ha realizado correctamente.</p>
+
+<h3>
+<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Orquestación con Vagrant</h3>
+
+<p>Para la orquestación de máquinas virtuales se ha utilizado la herramienta de software libre Vagrant. Está desarrollada en Ruby y se complementa perfectamente con sofware de virtualización como VirtualBox y con software de aprovisionamiento como Ansible.</p>
+
+<p>Para instalar la herramienta Vagrant, primero tenemos que instalar VirtualBox, ya que es el software de virtualización seleccionado para utilizar Vagrant, por tanto utilizamos el comando siguiente:</p>
+
+<pre>sudo apt-get install virtualbox dkms</pre>
+
+<p>Una vez instalado VirtualBox, procedemos a la instalación de Vagrant mediante el siguieten comando:</p>
+
+<pre>sudo apt-get -y install vagrant</pre>
+
+<p>Vamos ahora a crear el directorio en el que vamos a realizar la configuración Vagrant mediante el Vagrantfile. Para ello, creamos un directorio en nuestro sistema e iniciamos el servicio Vagrant, por tanto, ejecutamos los siguientes comandos. </p>
+
+<pre>mkdir vagrant</pre>
+
+<pre>vagrant init</pre>
+
+<p>Ahora tenemos ya creado nuestro directorio y nuestro fichero Vagrantfile, asi que, a continuación, vamos a comentar el contenido del fichero para nuestra orquetación.</p>
+
+
+<p>En este punto, tenemos que decidir qué sistema operativo vamos a utilizar y cuántas máquinas vamos a necesitar en nuestra instalación. Otro punto importante a comentar es la provisión que vamos a realizar sobre dichas máquinas virtuales. Para ello, he utilizado Ansible e incrustamos las intrucciones necesarias para la ejecución de dicho provisionamiento. Como comentamos anteriormente, Ansible y Vagrant se complementan perfectamente, y es por ello que la propia provisión la insertaremos en el fichero de configuración Vagrant, como vemos a continuación.</p>
+
+<pre>
+  #Fichero Vagrant para crear y provisionar tres máquinas virtuales Ubuntu 14.04.
+
+  Vagrant.configure(2) do |config|
+
+    #Definimos la configuración de las tres máquinas virtuales.
+
+    config.vm.define "vm1" do |vm1|
+      vm1.vm.box = "ubuntu/trusty64"
+    end
+
+    config.vm.define "vm2" do |vm2|
+      vm2.vm.box = "ubuntu/trusty64"
+    end
+
+    config.vm.define "vm3" do |vm3|
+      vm3.vm.box = "ubuntu/trusty64"
+    end
+
+    #Especificamos cual será el fichero de ansible que va a provisionar las tres máquinas virtuales.
+
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = "playbook.yml"
+    end
+
+  end
+
+</pre>
+
+<p>Si observamos el fichero Vagrantfile, vamos a crear 3 máquinas virtuales, con el sistema operativo Ubuntu 14.04. Como podemos observar, las últimas instrucciones pertenecen al provisionamiento Ansible. Una vez creadas las máquinas virtuales, se realiza la provisión de las mismas mediante la ejecución de playbook.yml, el cual se va a situar en el mismo directorio que nuestro Vagrantfile. Vamos a obervar ahora el conteniedo de nuestro playbook, utilizado en el apartado anterior de la documentación.</p>
+
+<pre>
+  ---
+- hosts: all
+  become: yes
+  remote_user: ubuntu
+
+  tasks:
+  - name: Actualizar sistema
+    apt: update_cache=yes
+
+  - name: Instalar git
+    apt: pkg=git state=latest
+
+  - name: Instalar MongoDB
+    apt: name=mongodb state=latest
+
+  - name: Instalar Pip
+    apt: name=python-setuptools state=present
+    apt: name=python-dev state=present
+    apt: name=python-pip state=present
+
+  - name: Instalar PyMongo
+    pip: name=pymongo
+
+  - name: Instalar Python
+    pip: name=python
+
+  - name: Instalar virtualenv
+    pip: name=virtualenv
+
+  - name: Instalar Django
+    pip: name=django
+</pre>
+
+<p>En el playbook, especificamos los paquetes o el software que vamos a necesitar en nuestras máquinas virtuales creadas con Vagrant.</p>
+
+<p>Una vez que tenemos esta organización de ficheros y el propio contenido de ellos, procedemos a la ejecución de Vagrant utilizando el siguiente comando.</p>
+
+<pre>vagrant up</pre>
+
+<p>Cuando finalice, podremos acceder a cada una de nuestras máquinas instaladas. Para ello usamos el siguiente comando, donde nombre_máquina va a corresponder al nombre especificado en el Vagrantfile, en este caso podría ser vm1, vm2 o vm3.</p>
+
+<pre>vagrant ssh nombre_máquina</pre>
+
+<p>En las siguientes imágenes se muestra cómo se realiza correctamente la creación, el levantamiento, provisionamiento de las máquinas virtuales, así como una muestra de que están corriendo en VirtualBox.</p>
+
+<p>En las primeras cuatro imágenes vemos como se instala y crea la primera máquina, se aprovisiona y comienza con la segunda.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/vagrant1.png" alt="vagrant">
+
+<img src="https://rawgit.com/mortega87/Images/master/vagrant2.png" alt="vagrant">
+
+<img src="https://rawgit.com/mortega87/Images/master/vagrant3.png" alt="vagrant">
+
+<img src="https://rawgit.com/mortega87/Images/master/vagrant4.png" alt="vagrant">
+
+<p>Mostramos una lista de los boxes de Vagrant creados en mi equipo.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/vagrant5.png" alt="vagrant">
+
+<p>Y por último vemos como están creadas y corriendo en VirtualBox.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/vagrant6.png" alt="vagrant">
+
+
+<p>Vagrant nos permite también realizar sobre ellas otra serie de acciones como son:</p>
+
+<p>Salir de la máquina virtual:</p>
+
+<pre>exit</pre>
+
+<p>Apagar la máquina virtual:</p>
+
+<pre>vagrant halt nombre_máquina</pre>
+
+<p>Eliminar la máquina virtual:</p>
+
+<pre>vagrant destroy nombre_máquina.</pre>
+
+<p>O ver la lista de máquinas virtuales de las que disponemos:</p>
+
+<pre>vagrant box list</pre>
+
+<p>Aparte de esto, he realizado tambíen la orquestación en cloud utilizando el servicio de Microsoft Azure.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/azurevagrant1.png" alt="vagrant">
+
+<p>Podemos ver en la siguiente imagen como se realiza la instalación para el plugin de azure para Vagrant y a continuación creamos el bos para nuestra máquina virtual.</p>
+
+<p>Y por último, creamos la maquina virtual a través de nuestro siguiente Vagrantfile, donde previamente tendremos que haber congfigurado nuestra cuenta de Azure mediante la herramienta azure-cli. Vemos a continuación como ha quedado el Vagrantfile y una captura de comprobación de la creación de la máquina virtual.</p>
+
+<pre>
+  VAGRANTFILE_API_VERSION = '2'
+
+  Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+    config.vm.box     = 'azure1'
+    config.vm.box_url = 'https://github.com/msopentech/vagrant-azure/raw/master/dummy.box'
+
+    config.ssh.username         = 'vagrant'
+
+    config.vm.provider :azure do |azure|
+    	#full path to pem file
+  	azure.mgmt_certificate = File.expand_path('~/.ssh/azurevagrant.key')
+      azure.mgmt_endpoint = 'https://management.core.windows.net'
+
+      #to get this run: azure account list
+      azure.subscription_id = '15ae55f3-69f0-4cab-9374-fa39efad56fe'
+
+  	azure.storage_acct_name = '' # optional
+
+  	#to get this run: azure vm image list
+  	azure.vm_image = 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_2-LTS-amd64-server-20150506-en-us-30GB'
+
+      azure.vm_user = 'vagrant' # defaults to 'vagrant' if not provided
+      azure.vm_password = 'vagrant123#@!' # min 8 characters. should contain a lower case letter, an uppercase letter, a number and a special character
+
+  	azure.vm_name = 'azurevagrant-django1' # max 15 characters. contains letters, number and hyphens. can start with letters and can end with letters and numbers
+      azure.cloud_service_name = '' # same as vm_name. leave blank to auto-generate
+
+      ##to get this run: azure vm location list
+      azure.vm_location = 'North Europe'
+
+      azure.tcp_endpoints = '3389:53389' # opens the Remote Desktop internal port that listens on public port 53389. Without this, you cannot RDP to a Windows VM.
+      azure.winrm_https_port = 5986
+  	azure.ssh_port = '22'
+
+      azure.winrm_transport = %w(https)
+    end
+
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = "playbook.yml"
+    end
+
+  end
+</pre>
+
+<p>Como podemos observar, hemos utilizado el mismo playbook que para local.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/azurevagrant2.png" alt="vagrant">
+
+<p>En conclusión, con Vagrant estamos ante una herramienta muy potente de orquestación de máquinas virtuales, la cual nos permite no solo automatizar el proceso de creación de nuestro entorno, sino provisionar el mismo de una manera sencilla.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/mortega87/ProyectoCC-16-17">Proyectocc-16-17</a> is maintained by <a href="https://github.com/mortega87">mortega87</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+
+  </body>
+</html>
