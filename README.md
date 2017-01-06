@@ -171,6 +171,53 @@ Para la orquestación en cloud he utilizado Microsoft Azure, donde hemos utiliza
 ![alt tag](https://rawgit.com/mortega87/Images/master/azurevagrant2.png)
 
 
+### Contenedores con Docker.
+
+Para la creación de un contenedor utilizando la plataforma AWS, en primer lugar conectamos con la máquina e instalamos Docker.
+
+![alt tag](https://rawgit.com/mortega87/Images/master/Docker1.png)
+
+![alt tag](https://rawgit.com/mortega87/Images/master/Docker2.png)
+
+Tras esto, buscamos una imagen de Docker que pueda servirnos de ayuda para la creación de nuestro contenedor. En mi caso he elegido un contenedor con Django, y a través de un Dockerfile he añadido los complementos restantes.
+
+![alt tag](https://rawgit.com/mortega87/Images/master/Docker4.png)
+
+<pre>
+
+FROM django
+  MAINTAINER Mario Ortega Aguayo "mortega87@gmail.com"
+
+  RUN apt-get update
+
+  #Install Git
+  RUN apt-get -y install git
+
+  #Download repository
+  RUN git clone https://github.com/mortega87/ProyectoCC-16-17
+
+
+  #Install MongoDB
+  RUN apt-get -y install mongodb
+
+</pre>
+
+A continuación creamos la imagen que hemos definido anteriormente.
+
+![alt tag](https://rawgit.com/mortega87/Images/master/Docker3.png)
+
+Y la subimos a nuestro perfil de DockerHub.
+
+![alt tag](https://rawgit.com/mortega87/Images/master/Docker5.png)
+
+![alt tag](https://rawgit.com/mortega87/Images/master/Docker6.png)
+
+Para finalizar arrancamos nuestro contenedor.
+
+![alt tag](https://rawgit.com/mortega87/Images/master/Docker7.png)
+
+
+
 
 
 
