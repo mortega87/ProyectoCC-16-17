@@ -321,6 +321,56 @@
 
 <p>En conclusión, con Vagrant estamos ante una herramienta muy potente de orquestación de máquinas virtuales, la cual nos permite no solo automatizar el proceso de creación de nuestro entorno, sino provisionar el mismo de una manera sencilla.</p>
 
+<h3>
+<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Docker</h3>
+
+<p>Para la creación de un contenedor preparado con el entorno de desarrollo de ésta aplicación web, tenemos que realizar los pasos que vamos a ver a continuación.</p>
+
+<p>Vamos a realizar la creación del contenedor en una máquina remota que tenemos instalada en AWS. Por ello, en primer lugar, esta máquina tiene que tener instalado Docker, como vemos a continuación.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/Docker1.png" alt="docker">
+
+<img src="https://rawgit.com/mortega87/Images/master/Docker2.png" alt="docker">
+
+<p>Una vez que se tiene Docker instalado, procedemos a crear un Dockerfile, el cual va a variar dependiendo de las necesidades. En mi caso, he creado una imagen personalizada a través de una anteriormente creada la cual incluye Django. Por tanto, unicamente me ha sido necesario añadir git, clonar nuestro repositorio e instalar MongoDB.</p>
+
+<p>A continuación vemos como hacer una búsqueda de imágenes previamente creadas y el contenido del Dockerfile.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/Docker4.png" alt="docker">
+
+<pre>
+  FROM django
+  MAINTAINER Mario Ortega Aguayo "mortega87@gmail.com"
+
+  RUN apt-get update
+
+  #Install Git
+  RUN apt-get -y install git
+
+  #Download repository
+  RUN git clone https://github.com/mortega87/ProyectoCC-16-17
+
+
+  #Install MongoDB
+  RUN apt-get -y install mongodb
+
+</pre>
+
+<p>Una vez que tenemos el ficheroDockerfile definido, nos vamos a crear una imagen y la vamos a  almacenar en un repositorio DockerHub llamado mortega/musicspace.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/Docker3.png" alt="docker">
+
+<p>A continuación, con la imagen ya creada, la vamos a subir a nuestro perfil de Docker Hub, y comprobamos que se ha creado correctamente en nuestro perfil desde la plataforma web.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/Docker5.png" alt="docker">
+
+<img src="https://rawgit.com/mortega87/Images/master/Docker6.png" alt="docker">
+
+<p>Por último, vemos que tenemos disponible nuestra inagen anteriormente creada y vamos a crear el contenedor con el comando run.</p>
+
+<img src="https://rawgit.com/mortega87/Images/master/Docker7.png" alt="docker">
+
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/mortega87/ProyectoCC-16-17">Proyectocc-16-17</a> is maintained by <a href="https://github.com/mortega87">mortega87</a>.</span>
 
